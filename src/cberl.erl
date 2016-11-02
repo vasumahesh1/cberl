@@ -14,7 +14,6 @@
 -export([append/3, prepend/3, touch/3, mtouch/3]).
 -export([incr/3, incr/4, incr/5, decr/3, decr/4, decr/5]).
 -export([arithmetic/6]).
--export([append/4, prepend/4]).
 %% retrieval operations
 -export([get_and_touch/3, get_and_lock/3, mget/2, get/2, unlock/3,
          mget/3, getl/3, http/6, view/4, foldl/3, foldr/3, foreach/2,
@@ -23,8 +22,6 @@
 -export([remove/2, flush/1, flush/2]).
 %% design doc opertations
 -export([set_design_doc/3, remove_design_doc/2]).
--deprecated({append, 4}).
--deprecated({prepend, 4}).
 
 %% @equiv start_link(PoolName, NumCon, "localhost:8091", "", "", "")
 start_link(PoolName, NumCon) ->
@@ -109,7 +106,7 @@ set(PoolPid, Key, Exp, Value, TranscoderOpts) ->
 %% @deprecated
 %% @equiv append(PoolPid, Key, Value)
 %% @doc Deprecated append function which accepts an _unused_ CAS value
--spec append(poolboy:pool(), key(), value()) -> {ok,integer()} | {error, _}.
+-spec append(pid(), key(), value()) -> ok | {error, _}.
 append(PoolPid, Key, Value) ->
     store(PoolPid, append, Key, Value, str, 0, 0).
 
